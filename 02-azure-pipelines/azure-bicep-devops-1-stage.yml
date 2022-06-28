@@ -1,4 +1,15 @@
 name: Deploy Bicep files
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'Azure subscription 1(144d0d14-9735-42b8-a4b2-d6e0240c5c7b)'
+    scriptType: 'ps'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      az --version
+            az group create --name $(resourceGroupName) --location $(location)
+            az deployment group what-if --resource-group $(resourceGroupName) \
+               --template-file $(templateFile) \
+               --parameters webAppName=$(webAppName)
 
 trigger: none
 # - main
